@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:agnostiko/agnostiko.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:prueba_ag/views/auth_screen/auth_screen.dart';
 import 'package:prueba_ag/views/game_screen/game_screen.dart';
 
 import '../../dialogs/mpos_selection_dialog.dart';
@@ -244,7 +245,8 @@ class SplashScreenViewState extends State<SplashScreenView> {
       Future.delayed(Duration(seconds: 2), () => true),
     ]);
     if (future[0] && future[1]) {
-      Navigator.pushReplacementNamed(context, GameScreen.route);
+      // Navigator.pushReplacementNamed(context, GameScreen.route);
+      Navigator.pushReplacementNamed(context, AuthScreen.route);
     }
   }
 

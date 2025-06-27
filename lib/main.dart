@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prueba_ag/flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:prueba_ag/utils/parameters.dart';
+import 'package:prueba_ag/views/auth_screen/auth_screen.dart';
 import 'package:prueba_ag/views/game_screen/game_screen.dart';
 
 import 'views/splash_screen/splash_screen.dart';
@@ -71,17 +72,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       locale: _locale,
       initialRoute: SplashScreenView.route,
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-        primaryColor: Color(0xFF03045E),
-        appBarTheme: AppBarTheme(color: const Color(0xFF03045E)),
-      ),
+      theme: theme,
       routes: {
         SplashScreenView.route: (BuildContext context) => SplashScreenView(),
-        GameScreen.route: (BuildContext context) => MaterialApp(
-              theme: theme,
-              home: const GameScreen(),
-            ),
+        AuthScreen.route: (BuildContext context) => const AuthScreen(),
+        GameScreen.route: (BuildContext context) => const GameScreen(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
