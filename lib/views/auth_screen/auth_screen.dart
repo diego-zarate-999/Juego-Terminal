@@ -101,15 +101,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   "assets/images/tap_card.png",
                   color: Colors.white,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _showGameScreen(context);
-                  },
-                  child: const Text("Comenzar"),
-                ),
               ],
             ),
           ),
