@@ -140,6 +140,22 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
+  PrinterScript _buildHistoryTicket() {
+    const regularFont = "Roboto";
+    List<PrinterObject> lines = [];
+
+    lines.add(PrinterText(
+      "Historial",
+      format: TextFormat(
+        fontSize: 24,
+        bold: true,
+        fontFamily: regularFont,
+      ),
+    ));
+
+    return PrinterScript(lines);
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawKeyboardListener(
@@ -152,16 +168,7 @@ class _GameScreenState extends State<GameScreen> {
           actions: [
             IconButton(
               onPressed: () async {
-                List<PrinterObject> lines = [];
-                lines.add(PrinterText(
-                  "Historial",
-                  format: TextFormat(
-                    fontSize: 24,
-                    bold: true,
-                  ),
-                ));
-
-                final printerScript = PrinterScript(lines);
+                final printerScript = _buildHistoryTicket();
                 await _printHistory(printerScript);
               },
               icon: const Icon(Icons.print),
