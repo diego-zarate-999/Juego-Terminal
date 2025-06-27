@@ -1,8 +1,11 @@
 import 'package:agnostiko/agnostiko.dart';
+import 'package:flutter/material.dart';
+import 'package:prueba_ag/utils/printer_templates.dart';
 import 'package:prueba_ag/widgets/history_container.dart';
+import 'dart:ui' as ui;
 
 abstract class Printer {
-  PrinterScript buildTicket();
+  Future<PrinterScript> buildTicket();
   Future<void> printTicket();
 }
 
@@ -12,8 +15,10 @@ class HistoryPrinter extends Printer {
   final History _history;
 
   @override
-  PrinterScript buildTicket() {
+  Future<PrinterScript> buildTicket() async {
     const regularFont = "Roboto";
+    final logo = await const AssetImage("assets/images/logo.png").toUiImage();
+    final rgbaLogo = await imgToByteData(logo, ui.ImageByteFormat.rawRgba);
 
     List<PrinterObject> lines = [
       PrinterText(
@@ -63,6 +68,15 @@ class HistoryPrinter extends Printer {
       );
     }
 
+    final maxWidth = await getPaperWidth();
+
+    lines.add(PrinterImage(
+      rgbaLogo,
+      logo.width,
+      logo.height,
+      offsetX: (maxWidth / 2) - (logo.width / 2),
+    ));
+
     lines.add(PrinterText(
       " ",
       format: TextFormat(fontSize: 64),
@@ -80,7 +94,7 @@ class HistoryPrinter extends Printer {
   @override
   Future<void> printTicket() async {
     try {
-      final printerScript = buildTicket();
+      final printerScript = await buildTicket();
 
       final historyWidth = await getPaperWidth() - 10;
 

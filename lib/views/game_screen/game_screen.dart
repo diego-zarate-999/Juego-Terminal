@@ -32,7 +32,7 @@ class _GameScreenState extends State<GameScreen> {
   int _remainingAttempts = 5;
   int _levelSliderValue = 0;
 
-  void _onSetGameLevel(GameLevel selectedLevel) {
+  void _onSetGameLevel(GameLevel selectedLevel) async {
     switch (selectedLevel) {
       case GameLevel.easy:
         _levelSliderValue = 0;
