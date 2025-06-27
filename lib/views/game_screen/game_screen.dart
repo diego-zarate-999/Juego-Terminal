@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:prueba_ag/dialogs/card_indicator_dialog.dart';
 import 'package:prueba_ag/game/game_controller.dart';
 import 'package:prueba_ag/game/level_generator.dart';
 import 'package:prueba_ag/game/printers/history_printer.dart';
+import 'package:prueba_ag/views/auth_screen/auth_screen.dart';
 import 'package:prueba_ag/widgets/history_container.dart';
 import 'package:prueba_ag/widgets/level_selector.dart';
 import 'package:prueba_ag/widgets/lives_counter.dart';
@@ -21,6 +23,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   final GameController _gameController = GameController();
+  void Function(bool)? changeRFCardDialogFn;
 
   List<int> _lessThan = [];
   List<int> _greaterThan = [];
@@ -126,6 +129,19 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
+  void _leaveGameScreen() async {
+    changeRFCardDialogFn = showCardIndicatorDialog(context, true);
+    await _printHistoryTicket();
+
+    if (changeRFCardDialogFn != null) {
+      changeRFCardDialogFn!(false);
+    }
+
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed(AuthScreen.route);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawKeyboardListener(
@@ -134,6 +150,10 @@ class _GameScreenState extends State<GameScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Adivina el número'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_sharp),
+            onPressed: _leaveGameScreen,
+          ),
           centerTitle: true,
           actions: [
             IconButton(

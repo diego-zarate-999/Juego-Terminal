@@ -22,7 +22,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _onRFCard() async {
-    transactionArgs?.entryMode = EntryMode.Contactless;
     changeRFCardDialogFn = showCardIndicatorDialog(context, true);
     _runTransaction();
   }
