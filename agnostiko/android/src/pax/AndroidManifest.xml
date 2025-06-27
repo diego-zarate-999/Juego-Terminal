@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.apps2go.agnostiko">
+
+  <uses-permission android:name="com.pax.permission.ICC"/>
+  <uses-permission android:name="com.pax.permission.PICC"/>
+  <uses-permission android:name="com.pax.permission.MAGCARD"/>
+  <uses-permission android:name="com.pax.permission.PRINTER"/>
+  <uses-permission android:name="com.pax.permission.PED"/>
+  <uses-permission android:name="com.pax.permission.UPDATE_APP"/>
+  <uses-permission android:name="com.pax.permission.UPDATE_FIRM"/>
+</manifest>

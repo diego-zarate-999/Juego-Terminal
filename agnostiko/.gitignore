@@ -1,0 +1,16 @@
+.DS_Store
+.dart_tool/
+.vscode/settings.json
+
+.packages
+.pub/
+
+.scannerwork/
+
+.idea/workspace.xml
+*.NLD
+build/
+doc/
+*.NLD
+**/.ccls-cache
+$Env

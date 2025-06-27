@@ -1,0 +1,129 @@
+group 'com.apps2go.agnostiko'
+version '1.12.00'
+
+def dartEnvVars = [
+  IMPLEMENTATION: 'generic',
+  MODE: '',
+]
+
+// Las variables de entorno de Dart las utilizamos para configurar el proyecto 
+// para compilarse con la implementación nativa correcta para cierto terminal
+if (project.hasProperty('dart-defines')) {
+  dartEnvVars = project.property('dart-defines')
+    .split(',')
+    .collectEntries { entry ->
+      def byteArray = Base64.getDecoder().decode(entry)
+      def decodedString = new String(byteArray)
+      def pair = decodedString.split('=')
+      [(pair.first()): pair.last()]
+    }
+}
+
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+  repositories {
+    // Repositorio local de Maven donde se deben instalar las dependencias 
+    // (en AAR o JAR) de los fabricantes
+    maven {
+      url uri("${project(':agnostiko').projectDir}/repo")
+    }
+
+    google()
+    mavenCentral()
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 33
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/${dartEnvVars.IMPLEMENTATION}/AndroidManifest.xml"
+        assets.srcDirs = ["src/${dartEnvVars.IMPLEMENTATION}/assets", "src/main/assets"]
+        kotlin.srcDirs = ["src/${dartEnvVars.IMPLEMENTATION}/kotlin", "src/main/kotlin"]
+        java.srcDirs = ["src/${dartEnvVars.IMPLEMENTATION}/kotlin", "src/main/kotlin"]
+        res.srcDirs = ["src/${dartEnvVars.IMPLEMENTATION}/res"]
+        jniLibs.srcDirs = ["src/${dartEnvVars.IMPLEMENTATION}/jniLibs"]
+      }
+    }
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 33
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    buildTypes {
+      release {
+        minifyEnabled true
+        proguardFiles("proguard-rules.pro", getDefaultProguardFile("proguard-android-optimize.txt"))
+      }
+    }
+}
+
+dependencies {
+  if (dartEnvVars.IMPLEMENTATION == 'newland') {
+    api "com.newland:MESDK:3.10.46"
+  }
+  if (dartEnvVars.IMPLEMENTATION == 'newland_nsdk') {
+    api "com.newland:NSDK:2.9.0"
+    api "com.newland:NSDK-Plugin-Card:1.2.0"
+    api "com.newland:emvl3:4.4.6"
+  }
+  if (dartEnvVars.IMPLEMENTATION == 'newland_pinpad') {
+    api "com.newland:NSDK:2.9.0"
+    api "com.newland:NSDK-Plugin-Card:1.2.0"
+    api "com.newland:emvl3:4.4.6"
+    api "com.newland:emvl3-Plugin-Ext:1.2.4"
+    api "com.newland:NSDK-Plugin-Ext:2.4.0"
+    api "com.telpo:icod:3.1.7"
+  }
+  if (dartEnvVars.IMPLEMENTATION == 'newpos') {
+    compileOnly "com.newpos:SDK:10.0.19"
+    api "com.newpos:emvl2:1.0"
+  }
+  /// NO TOCAR: Esto es necesario para un correcto linting durante desarrollo
+  if (dartEnvVars.IMPLEMENTATION == 'newpos-dev') {
+    api "com.newpos:SDK:10.0.19"
+    api "com.newpos:emvl2:1.0"
+  }
+  if (dartEnvVars.IMPLEMENTATION == 'pax') {
+    api "com.pax:NeptuneLiteApi:3.32.00"
+    api "com.pax:COMMON:v103"
+    api "com.pax:DEVICE:v103"
+    api "com.pax:EMV:v106"
+    api "com.pax:ENTRY:v105"
+    api "com.pax:MC:v100"
+    api "com.pax:WAVE:v101"
+    api "com.pax:AE:v101"
+  }
+  if (dartEnvVars.IMPLEMENTATION == 'sunmi') {
+    api "com.sunmi:PayLib:1.4.57"
+    api "com.sunmi:PayLib-sources:1.4.57"
+    implementation 'com.sunmi:printerlibrary:1.0.16'
+  }
+    if (dartEnvVars.IMPLEMENTATION == 'datecs') {
+        api "com.datecs:SDK:4.3.57"
+        api "com.android:pinpad:1.0"
+        api "com.android:printer:1.0"
+    }
+
+  if(dartEnvVars.MODE != 'dev') {
+    implementation "com.apps2go.agnostiko:agnostiko_release:$version-${dartEnvVars.IMPLEMENTATION}"
+  }
+}

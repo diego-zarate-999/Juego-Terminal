@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.apps2go.agnostiko">
+  <uses-permission android:name="android.permission.SHUTDOWN"/>
+  <application android:usesCleartextTraffic="false" android:allowBackup="false">
+  </application>
+</manifest>

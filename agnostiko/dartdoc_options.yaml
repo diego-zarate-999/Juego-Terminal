@@ -1,0 +1,3 @@
+dartdoc:
+  include: ['agnostiko', 'bluetooth', 'cards', 'device', 'emv', 'iso8583', 'mdb', 'mpos', 'ped', 'pinpad', 'printer', 'scanner', 'serialport', 'utils']
+  nodoc: ['lib/utils/src/numeric_keyboard.dart']

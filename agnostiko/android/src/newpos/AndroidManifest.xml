@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.apps2go.agnostiko">
+  <application android:usesCleartextTraffic="false" android:allowBackup="false">
+    <uses-library android:name="com.pos.device"></uses-library>
+  </application>
+</manifest>

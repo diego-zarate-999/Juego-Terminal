@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.pax</groupId>
+  <artifactId>NeptuneLiteApi</artifactId>
+  <versioning>
+    <release>3.32.00</release>
+    <versions>
+      <version>3.32.00</version>
+    </versions>
+    <lastUpdated>20230410145730</lastUpdated>
+  </versioning>
+</metadata>

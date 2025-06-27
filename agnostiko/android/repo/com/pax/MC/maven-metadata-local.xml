@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.pax</groupId>
+  <artifactId>MC</artifactId>
+  <versioning>
+    <release>v100</release>
+    <versions>
+      <version>v100</version>
+    </versions>
+    <lastUpdated>20210611154242</lastUpdated>
+  </versioning>
+</metadata>

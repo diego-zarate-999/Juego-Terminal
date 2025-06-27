@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.apps2go.agnostiko">
+  <uses-permission android:name="android.permission.MANAGE_NEWLAND"/>
+  <uses-permission android:name="android.permission.SHUTDOWN"/>
+  <application android:usesCleartextTraffic="false" android:allowBackup="false">
+    <activity android:name="com.newland.sdk.pininput.KeyBoardActivity"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+      android:exported="false"/>
+    <receiver android:name="com.apps2go.agnostiko.newland.InstallationReceiver" android:exported="false">
+      <intent-filter>
+        <action android:name="android.intent.action.INSTALL_APP_HIDE"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="com.apps2go.agnostiko.newland.DelReceiver" android:exported="false">
+      <intent-filter>
+        <action android:name="android.intent.action.DELETE_APP_HIDE"/>
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>

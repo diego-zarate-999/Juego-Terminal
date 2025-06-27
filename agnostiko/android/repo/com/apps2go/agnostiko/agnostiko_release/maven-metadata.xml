@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.apps2go.agnostiko</groupId>
+  <artifactId>agnostiko_release</artifactId>
+  <versioning>
+    <latest>1.12.00-newland_pinpad</latest>
+    <release>1.12.00-newland_pinpad</release>
+    <versions>
+      <version>1.12.00-newland_nsdk</version>
+      <version>1.12.00-pax</version>
+      <version>1.12.00-newland_pinpad</version>
+    </versions>
+    <lastUpdated>20250509232709</lastUpdated>
+  </versioning>
+</metadata>
