@@ -133,7 +133,7 @@ class _GameScreenState extends State<GameScreen> {
       autofocus: true,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Adivina el numero'),
+          title: const Text('Adivina el número'),
           centerTitle: true,
           actions: [
             IconButton(

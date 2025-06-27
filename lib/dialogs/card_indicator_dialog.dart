@@ -20,6 +20,7 @@ void Function(bool) showCardIndicatorDialog(
     barrierDismissible: false,
     builder: (BuildContext context) {
       return Dialog(
+        backgroundColor: const Color.fromARGB(255, 40, 40, 40),
         child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
           setStateDialog = setState;
