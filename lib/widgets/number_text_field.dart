@@ -48,15 +48,18 @@ class NumberTextField extends StatelessWidget {
       child: Form(
         key: _formKey,
         child: TextFormField(
-          keyboardType: TextInputType.numberWithOptions(),
+          keyboardType: const TextInputType.numberWithOptions(),
           controller: _controller,
           validator: _validate,
           onEditingComplete: _onEditingComplete,
           maxLength: 4,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             label: Text("Número"),
             border: OutlineInputBorder(),
             hintText: "####",
+            hintStyle: TextStyle(
+              color: Colors.white,
+            ),
             counterText: "",
           ),
         ),

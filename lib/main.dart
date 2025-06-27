@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:prueba_ag/flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:prueba_ag/providers/history_provider.dart';
 import 'package:prueba_ag/utils/parameters.dart';
 import 'package:prueba_ag/views/game_screen/game_screen.dart';
 
@@ -80,16 +78,9 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         SplashScreenView.route: (BuildContext context) => SplashScreenView(),
-        GameScreen.route: (BuildContext context) => MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (context) => HistoryProvider(),
-                )
-              ],
-              child: MaterialApp(
-                theme: theme,
-                home: const GameScreen(),
-              ),
+        GameScreen.route: (BuildContext context) => MaterialApp(
+              theme: theme,
+              home: const GameScreen(),
             ),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,

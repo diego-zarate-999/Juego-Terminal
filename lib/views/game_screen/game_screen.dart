@@ -1,12 +1,7 @@
-import 'package:agnostiko/agnostiko.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:prueba_ag/dialogs/circular_progress_dialog.dart';
 import 'package:prueba_ag/game/game_controller.dart';
 import 'package:prueba_ag/game/level_generator.dart';
-import 'package:prueba_ag/utils/locale.dart';
-import 'package:prueba_ag/utils/printer_templates.dart';
-import 'package:prueba_ag/providers/history_provider.dart';
+import 'package:prueba_ag/game/printers/history_printer.dart';
 import 'package:prueba_ag/widgets/history_container.dart';
 import 'package:prueba_ag/widgets/level_selector.dart';
 import 'package:prueba_ag/widgets/lives_counter.dart';
@@ -29,6 +24,7 @@ class _GameScreenState extends State<GameScreen> {
 
   List<int> _lessThan = [];
   List<int> _greaterThan = [];
+  final _history = History.test();
 
   int _remainingAttempts = 5;
   int _levelSliderValue = 0;
@@ -107,14 +103,12 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _addToHistory(bool userWon) {
-    context
-        .read<HistoryProvider>()
-        .updateHistory(_gameController.secretNumber, userWon);
-
+    _history.addRecord(_gameController.secretNumber, userWon);
     _startNewGame();
   }
 
   void _showMessage(String message) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 2),
@@ -123,37 +117,13 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  Future<void> _printHistory(PrinterScript printerScript) async {
+  Future<void> _printHistoryTicket() async {
     try {
-      final ticketWidth = await getPaperWidth();
-      final threeQuartersWidth = (ticketWidth * 3) ~/ 4;
-
-      await printScript(
-        printerScript,
-        bottomFeed: false,
-        customPaperWidth: threeQuartersWidth,
-      );
+      final historyPrinter = HistoryPrinter(_history);
+      historyPrinter.printTicket();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Error imprimiendo"),
-      ));
+      _showMessage("¡Error al imprimir!");
     }
-  }
-
-  PrinterScript _buildHistoryTicket() {
-    const regularFont = "Roboto";
-    List<PrinterObject> lines = [];
-
-    lines.add(PrinterText(
-      "Historial",
-      format: TextFormat(
-        fontSize: 24,
-        bold: true,
-        fontFamily: regularFont,
-      ),
-    ));
-
-    return PrinterScript(lines);
   }
 
   @override
@@ -167,10 +137,7 @@ class _GameScreenState extends State<GameScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () async {
-                final printerScript = _buildHistoryTicket();
-                await _printHistory(printerScript);
-              },
+              onPressed: _printHistoryTicket,
               icon: const Icon(Icons.print),
             ),
           ],
@@ -216,7 +183,7 @@ class _GameScreenState extends State<GameScreen> {
                       width: 16,
                     ),
                     Expanded(
-                      child: HistoryContainer(),
+                      child: HistoryContainer(_history),
                     ),
                   ],
                 ),
