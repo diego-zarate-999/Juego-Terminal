@@ -27,7 +27,7 @@ class _GameScreenState extends State<GameScreen> {
 
   List<int> _lessThan = [];
   List<int> _greaterThan = [];
-  final _history = History.test();
+  final _history = History();
 
   int _remainingAttempts = 5;
   int _levelSliderValue = 0;
@@ -155,12 +155,6 @@ class _GameScreenState extends State<GameScreen> {
             onPressed: _leaveGameScreen,
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: _printHistoryTicket,
-              icon: const Icon(Icons.print),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Padding(

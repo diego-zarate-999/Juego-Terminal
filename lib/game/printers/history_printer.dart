@@ -30,24 +30,37 @@ class HistoryPrinter extends Printer {
         ),
         alignment: TextAlignment.Center,
       ),
-      PrinterRow([
-        PrinterText(
-          "NO. JUEGO",
-          alignment: TextAlignment.Center,
-          format: TextFormat(fontSize: 20, fontFamily: regularFont),
-        ),
-        PrinterText(
-          "NÚMERO SECRETO",
-          alignment: TextAlignment.Center,
-          format: TextFormat(fontSize: 20, fontFamily: regularFont),
-        ),
-        PrinterText(
-          "RESULTADO",
-          alignment: TextAlignment.Center,
-          format: TextFormat(fontSize: 20, fontFamily: regularFont),
-        ),
-      ]),
+      if (_history.secretNumbers.isNotEmpty)
+        PrinterRow([
+          PrinterText(
+            "NO. JUEGO",
+            alignment: TextAlignment.Center,
+            format: TextFormat(fontSize: 20, fontFamily: regularFont),
+          ),
+          if (_history.secretNumbers.isNotEmpty)
+            PrinterText(
+              "NÚMERO SECRETO",
+              alignment: TextAlignment.Center,
+              format: TextFormat(fontSize: 20, fontFamily: regularFont),
+            ),
+          if (_history.secretNumbers.isNotEmpty)
+            PrinterText(
+              "RESULTADO",
+              alignment: TextAlignment.Center,
+              format: TextFormat(fontSize: 20, fontFamily: regularFont),
+            ),
+        ]),
     ];
+
+    if (_history.secretNumbers.isEmpty) {
+      lines.add(
+        PrinterText(
+          "¡No terminaste ningún juego!",
+          format: TextFormat(fontSize: 24, fontFamily: regularFont),
+          alignment: TextAlignment.Center,
+        ),
+      );
+    }
 
     for (int i = 0; i < _history.secretNumbers.length; i++) {
       lines.add(
